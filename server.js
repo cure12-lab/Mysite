@@ -1,55 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Improved Site</title>
-    <style>
-        body { font-family: Arial; background: #f8f9fa; }
-        .container { max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input, button { width: 100%; padding: 10px; margin: 5px 0; }
-        button { background: #007BFF; color: white; border: none; }
-        button:hover { background: #0056b3; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h2>Register</h2>
-    <input id="regName" placeholder="Name">
-    <input id="regEmail" placeholder="Email">
-    <input id="regPass" type="password" placeholder="Password">
-    <button onclick="signup()">Sign Up</button>
-    <hr>
-    <h2>Login</h2>
-    <input id="logEmail" placeholder="Email">
-    <input id="logPass" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <p id="msg" style="color:red;"></p>
-</div>
-<script>
-const API = "https://YOUR-BACKEND-URL.onrender.com"; // Replace after hosting
+const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
+const app = express();
 
-async function signup() {
-    const res = await fetch(API + "/signup", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: document.getElementById("regName").value,
-            email: document.getElementById("regEmail").value,
-            password: document.getElementById("regPass").value
-        })
-    });
-    document.getElementById("msg").innerText = (await res.json()).message || "Error";
-}
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
-async function login() {
-    const res = await fetch(API + "/login", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("logEmail").value,
-            password: document.getElementById("logPass").value
-        })
-    });
-    const data = await res.json();
-    document.getElementById("msg").innerText = data.user ? "Welcome " + data.user.name : data.error;
-}
-</script>
-</body>
-</html>
+// ====== DATABASE CONNECTION ======
+mongoose.connect(mongodb+srv://sittubittus:<db_W6PXYmt8tefZ7f4q>@cluster0.ss60ylm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
+// ====== SCHEMA ======
+const UserSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+const User = mongoose.model("User", UserSchema);
+
+// ====== REAL API ROUTES ======
+app.post("/api/register", async (req, res) => {
+  const { name, email, password } = req.body;
+  const user = new User({ name, email, password });
+  await user.save();
+  res.json({ success: true, message: "User registered" });
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+  if (user) {
+    res.json({ success: true, message: "Login successful" });
+  } else {
+    res.json({ success: false, message: "Invalid credentials" });
+  }
+});
+
+app.get("/api/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
+// ====== DEFAULT ROUTE ======
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));
