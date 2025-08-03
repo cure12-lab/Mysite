@@ -7,23 +7,47 @@
 </head>
 <body>
 
-<!-- Floating Characters -->
-<img id="barbarian" class="floating-character" src="https://static.wikia.nocookie.net/clashofclans/images/d/d5/Barbarian_info.png">
-<img id="archer" class="floating-character" src="https://static.wikia.nocookie.net/clashofclans/images/8/8e/Archer_info.png">
-
 <header>
   <div class="logo-section">
     <img src="https://static.wikia.nocookie.net/clashofclans/images/5/55/Clash_Logo.png" alt="Clash Logo">
-    <h1>Claim Your Clash Rewards!</h1>
+    <div>
+      <h1>Limited Time Clash Rewards</h1>
+      <p class="subtitle">Grab exclusive skins & sceneries before the timer ends!</p>
+      <p id="countdown" class="countdown"></p>
+    </div>
   </div>
-  <p class="subtitle">Exclusive Skins & Sceneries for a Limited Time</p>
 </header>
 
 <main>
-  <div class="offers"></div>
+  <div class="offers">
+    <div class="card">
+      <img src="https://static.wikia.nocookie.net/clashofclans/images/3/3b/Primal_King_Skin.png" alt="Primal King">
+      <h3>Primal King Skin</h3>
+      <p>Exclusive limited-time skin for Barbarian King</p>
+      <button onclick="openLogin()">Claim Now</button>
+    </div>
+    <div class="card">
+      <img src="https://static.wikia.nocookie.net/clashofclans/images/d/d6/Clockwork_Queen_Skin.png" alt="Clockwork Queen">
+      <h3>Clockwork Queen Skin</h3>
+      <p>Special edition skin for Archer Queen</p>
+      <button onclick="openLogin()">Claim Now</button>
+    </div>
+    <div class="card">
+      <img src="https://static.wikia.nocookie.net/clashofclans/images/7/75/Party_Warden_Skin.png" alt="Party Warden">
+      <h3>Party Warden Skin</h3>
+      <p>Party vibes for Grand Warden!</p>
+      <button onclick="openLogin()">Claim Now</button>
+    </div>
+    <div class="card">
+      <img src="https://static.wikia.nocookie.net/clashofclans/images/8/89/Shadow_Champion_Skin.png" alt="Shadow Champion">
+      <h3>Shadow Champion Skin</h3>
+      <p>Dark and deadly look for Royal Champion</p>
+      <button onclick="openLogin()">Claim Now</button>
+    </div>
+  </div>
 </main>
 
-<!-- Login Modal -->
+<!-- Google-style Login Modal -->
 <div id="loginModal" class="login-modal">
   <div class="login-container">
     <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google Logo" style="width:60px;margin-bottom:15px;">
@@ -45,13 +69,26 @@
   </div>
 </div>
 
-<script src="script.js"></script>
 <script>
-async function login(){
+function openLogin() {
+  document.getElementById('loginModal').style.display = 'flex';
+}
+function login(){
   document.getElementById('loginModal').style.display='none';
   document.getElementById('thankYou').style.display='flex';
   setTimeout(()=>{ window.location.href="https://supercell.com"; },3000);
 }
+// Countdown
+let countDownDate = new Date().getTime() + (3*24*60*60*1000); // 3 days
+setInterval(function() {
+  let now = new Date().getTime();
+  let distance = countDownDate - now;
+  let days = Math.floor(distance / (1000*60*60*24));
+  let hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  let minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+  let seconds = Math.floor((distance%(1000*60))/1000);
+  document.getElementById("countdown").innerHTML = "Offer ends in: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+}, 1000);
 </script>
 </body>
 </html>
