@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Site</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Site is working with MongoDB!</h1>
+  <div class="container">
+    <h1>Welcome to My Site</h1>
+    <div class="form-container">
+      <h2>Register</h2>
+      <input id="regName" type="text" placeholder="Name">
+      <input id="regEmail" type="email" placeholder="Email">
+      <input id="regPassword" type="password" placeholder="Password">
+      <button onclick="register()">Register</button>
+    </div>
+    <div class="form-container">
+      <h2>Login</h2>
+      <input id="loginEmail" type="email" placeholder="Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+    <p id="message"></p>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
