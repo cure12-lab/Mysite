@@ -3,27 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Site</title>
+  <title>My Zite Clone</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to My Site</h1>
-    <div class="form-container">
-      <h2>Register</h2>
-      <input id="regName" type="text" placeholder="Name">
-      <input id="regEmail" type="email" placeholder="Email">
-      <input id="regPassword" type="password" placeholder="Password">
-      <button onclick="register()">Register</button>
-    </div>
-    <div class="form-container">
-      <h2>Login</h2>
-      <input id="loginEmail" type="email" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button onclick="login()">Login</button>
-    </div>
-    <p id="message"></p>
-  </div>
-  <script src="script.js"></script>
+  <header>
+    <h1>Welcome to My Website</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/login.html">Login</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <h2>Your Tagline Here</h2>
+    <p>This is a clone of my previous Zite-built site, now fully hosted on Render.</p>
+    <button onclick="window.location.href='/login.html'">Get Started</button>
+  </section>
+  <footer>
+    <p>© 2025 My Website - All Rights Reserved</p>
+  </footer>
 </body>
 </html>
