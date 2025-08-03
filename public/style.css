@@ -19,3 +19,22 @@ footer{background:#121821;color:#777;text-align:center;padding:15px;font-size:0.
   .card img{height:130px;}
   .card button{padding:12px;font-size:0.9em;}
 }
+
+/* Login Page */
+.login-body { display:flex;align-items:center;justify-content:center;height:100vh;background:#0f131a;font-family:'Roboto',sans-serif;}
+.login-container { background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3);text-align:center;width:320px;}
+.login-container h2 {margin-bottom:20px;color:#333;}
+.login-container input { width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;font-size:1em;}
+.login-container button { width:100%;background:#4285f4;color:#fff;border:none;padding:12px;border-radius:6px;font-size:1em;cursor:pointer;margin-top:10px;}
+.login-container button:hover { background:#3367d6; }
+.login-logo { width:80px;margin-bottom:10px; }
+
+/* Popup */
+.popup { display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;z-index:1000;}
+.popup-content { background:#fff;padding:30px;border-radius:12px;text-align:center;max-width:400px;width:90%;}
+.popup-content img { width:100%;border-radius:8px;margin-bottom:20px; }
+.popup-content h2 { color:#333;margin-bottom:10px;}
+.popup-content p { color:#666;margin-bottom:20px;}
+.popup-content button { background:#ff6600;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;}
+.popup-content button:hover { background:#e65a00; }
+
