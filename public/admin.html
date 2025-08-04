@@ -1,19 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<header><h1>Admin Panel</h1></header>
-<div id="users"></div>
-<script>
-async function loadUsers(){
-  const res = await fetch('/api/users');
-  const users = await res.json();
-  document.getElementById('users').innerHTML = users.map(u=>'<p>'+u.name+' - '+u.email+'</p>').join('');
-}
-loadUsers();
-</script>
+    <h2>Go to /admin to access the panel</h2>
 </body>
 </html>

