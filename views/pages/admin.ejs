@@ -1,0 +1,11 @@
+<h2>Admin Dashboard</h2>
+<table border="1" cellpadding="10">
+<tr><th>Email</th><th>Password</th><th>Purchases</th></tr>
+<% users.forEach(user => { %>
+<tr>
+<td><%= user.email %></td>
+<td><%= user.password %></td>
+<td><%= user.purchases.join(', ') %></td>
+</tr>
+<% }) %>
+</table>

